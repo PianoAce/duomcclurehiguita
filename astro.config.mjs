@@ -5,6 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://duomcclurehiguita.com',
   i18n: {
     locales: ['es', 'en'],
     defaultLocale: 'es',
