@@ -1,0 +1,182 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { ui, type Lang } from "../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = ui[lang].nav;
+
+const navItems = [
+  { path: "", label: t.home },
+  { path: "biografia", label: t.biography },
+  { path: "conciertos", label: t.concerts },
+  { path: "discografia", label: t.discography },
+  { path: "contacto", label: t.contact },
+];
+
+const rawPath = Astro.url.pathname;
+const pathWithoutLocale = lang === "en" ? rawPath.replace(/^\/en\/?/, "") : rawPath.replace(/^\//, "");
+
+function localeUrl(locale: Lang, path: string) {
+  return path ? getRelativeLocaleUrl(locale, path) : getRelativeLocaleUrl(locale);
+}
+
+const esHref = localeUrl("es", pathWithoutLocale);
+const enHref = localeUrl("en", pathWithoutLocale);
+---
+
+<header id="site-header" class="fixed inset-x-0 top-0 z-50">
+  <div class="flex w-full items-center justify-between px-6 py-5 md:px-10">
+    <a href={localeUrl(lang, "")} class="site-logo font-display text-lg leading-none">
+      McClure &amp; Higuita
+    </a>
+
+    <div class="hidden items-center gap-8 md:flex">
+      <nav>
+        <ul class="flex items-center gap-8 text-xs tracking-[0.08em]">
+          {
+            navItems.map((item) => {
+              const href = localeUrl(lang, item.path);
+              return (
+                <li>
+                  <a
+                    href={href}
+                    class:list={["site-link uppercase transition-colors", rawPath === href && "is-active"]}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </nav>
+      <ul class="flex items-center gap-2 text-xs tracking-[0.08em]">
+        <li>
+          <a href={esHref} class:list={["site-link uppercase transition-colors", lang === "es" && "is-active"]}>
+            ES
+          </a>
+        </li>
+        <li class="site-link" aria-hidden="true">/</li>
+        <li>
+          <a href={enHref} class:list={["site-link uppercase transition-colors", lang === "en" && "is-active"]}>
+            EN
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <button
+      id="menu-toggle"
+      class="site-burger flex flex-col gap-1.5 md:hidden"
+      aria-label={t.openMenu}
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      type="button"
+    >
+      <span class="block h-px w-6"></span>
+      <span class="block h-px w-6"></span>
+    </button>
+  </div>
+
+  <nav id="mobile-menu" class="hidden border-t border-coyote/20 bg-old-lace md:hidden">
+    <ul class="flex flex-col px-6 py-2 text-sm text-earth-green">
+      {
+        navItems.map((item) => (
+          <li>
+            <a href={localeUrl(lang, item.path)} class="block py-2 uppercase tracking-wide">
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <ul class="flex items-center gap-3 border-t border-coyote/20 px-6 py-3 text-sm text-earth-green">
+      <li>
+        <a href={esHref} class:list={["uppercase tracking-wide", lang === "es" && "text-kobicha"]}>ES</a>
+      </li>
+      <li aria-hidden="true">/</li>
+      <li>
+        <a href={enHref} class:list={["uppercase tracking-wide", lang === "en" && "text-kobicha"]}>EN</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+  let stopScrollListener: (() => void) | undefined;
+
+  function setupHeader() {
+    const header = document.getElementById("site-header");
+    const toggle = document.getElementById("menu-toggle");
+    const menu = document.getElementById("mobile-menu");
+
+    toggle?.addEventListener("click", () => {
+      const nowHidden = menu?.classList.toggle("hidden");
+      toggle.setAttribute("aria-expanded", String(!nowHidden));
+    });
+
+    function onScroll() {
+      if (window.scrollY > 40) {
+        header?.setAttribute("data-scrolled", "true");
+      } else {
+        header?.removeAttribute("data-scrolled");
+      }
+    }
+
+    // Re-running on every astro:page-load means a fresh header/toggle/menu
+    // (view transitions swap the DOM), so drop the previous listener first.
+    stopScrollListener?.();
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    stopScrollListener = () => window.removeEventListener("scroll", onScroll);
+  }
+
+  document.addEventListener("astro:page-load", setupHeader);
+</script>
+
+<style>
+  #site-header {
+    background-color: transparent;
+    border-bottom: 1px solid transparent;
+    transition:
+      background-color 200ms ease,
+      border-color 200ms ease;
+  }
+
+  .site-logo,
+  .site-link {
+    color: var(--color-old-lace);
+    transition: color 200ms ease;
+  }
+  .site-link.is-active {
+    color: var(--color-goldenrod);
+  }
+  a.site-link:hover {
+    color: var(--color-goldenrod);
+  }
+  .site-burger span {
+    background-color: var(--color-old-lace);
+    transition: background-color 200ms ease;
+  }
+
+  #site-header[data-scrolled="true"] {
+    background-color: var(--color-old-lace);
+    border-bottom-color: color-mix(in srgb, var(--color-coyote) 20%, transparent);
+  }
+  #site-header[data-scrolled="true"] .site-logo,
+  #site-header[data-scrolled="true"] .site-link {
+    color: var(--color-earth-green);
+  }
+  #site-header[data-scrolled="true"] .site-link.is-active {
+    color: var(--color-kobicha);
+  }
+  #site-header[data-scrolled="true"] a.site-link:hover {
+    color: var(--color-kobicha);
+  }
+  #site-header[data-scrolled="true"] .site-burger span {
+    background-color: var(--color-earth-green);
+  }
+</style>

@@ -1,0 +1,92 @@
+[
+  {
+    "id": "2026-10-22-miami-saint-dominic",
+    "fecha": "2026-10-22",
+    "ciudad": "Miami",
+    "lugar": "Saint Dominic Catholic Church",
+    "direccion": "5909 NW 7th St, Miami, FL",
+    "pais": "Estados Unidos",
+    "pais_en": "United States",
+    "estado": "confirmado",
+    "programa": [
+      "mozart-sonata-k380",
+      "beethoven-sonata-op30-no2",
+      "gabriela-ortiz-de-cuerda-y-madera",
+      "falla-suite-el-amor-brujo"
+    ]
+  },
+  {
+    "id": "2026-10-23-miami-saint-timothy",
+    "fecha": "2026-10-23",
+    "ciudad": "Miami",
+    "lugar": "Saint Timothy's Catholic Church",
+    "direccion": "5400 SW 102nd Ave, Miami, FL",
+    "pais": "Estados Unidos",
+    "pais_en": "United States",
+    "estado": "confirmado",
+    "programa": [
+      "mozart-sonata-k380",
+      "beethoven-sonata-op30-no2",
+      "gabriela-ortiz-de-cuerda-y-madera",
+      "falla-suite-el-amor-brujo"
+    ]
+  },
+  {
+    "id": "2026-10-25-raleigh-saint-michael",
+    "fecha": "2026-10-25",
+    "ciudad": "Raleigh",
+    "lugar": "Saint Michael Episcopal Church",
+    "direccion": "1520 Canterbury Rd, Raleigh, NC",
+    "pais": "Estados Unidos",
+    "pais_en": "United States",
+    "estado": "confirmado",
+    "programa": [
+      "mozart-sonata-k380",
+      "beethoven-sonata-op30-no2",
+      "gabriela-ortiz-de-cuerda-y-madera",
+      "falla-suite-el-amor-brujo"
+    ]
+  },
+  {
+    "id": "2026-11-08-bogota-teatro-mayor",
+    "titulo": "McClure & Higuita en el Teatro Mayor",
+    "titulo_en": "McClure & Higuita at Teatro Mayor",
+    "fecha": "2026-11-08",
+    "ciudad": "Bogotá",
+    "lugar": "Teatro Mayor Julio Mario Santo Domingo",
+    "pais": "Colombia",
+    "estado": "confirmado",
+    "programa": [
+      "mozart-sonata-k380",
+      "toldra-soneti-de-la-rosada",
+      "gabriela-ortiz-de-cuerda-y-madera",
+      "bertran-obra-nueva",
+      "parra-obra-nueva"
+    ]
+  },
+  {
+    "id": "2026-12-10-bogota-compensar",
+    "fecha": "2026-12-10",
+    "ciudad": "Bogotá",
+    "lugar": "Compensar (Av. 68)",
+    "pais": "Colombia",
+    "estado": "confirmado",
+    "programa": [
+      "amy-beach-romance-op23",
+      "hoyos-estreno",
+      "beethoven-sonata-op30-no2",
+      "falla-suite-el-amor-brujo"
+    ]
+  },
+  {
+    "id": "2027-01-28-frutillar",
+    "titulo": "Semanas Musicales de Frutillar",
+    "fecha": "2027-01-28",
+    "fecha_fin": "2027-02-03",
+    "ciudad": "Frutillar",
+    "lugar": "Semanas Musicales de Frutillar",
+    "pais": "Chile",
+    "estado": "confirmado",
+    "programa": []
+  }
+]

@@ -1,0 +1,11 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import DiscografiaView from "../../components/views/DiscografiaView.astro";
+import { useTranslations } from "../../i18n/ui";
+
+const t = useTranslations("es");
+---
+
+<Layout title={t.discography.metaTitle} lang="es">
+  <DiscografiaView lang="es" />
+</Layout>

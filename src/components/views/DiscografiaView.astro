@@ -1,0 +1,109 @@
+---
+import SectionTitle from "../SectionTitle.astro";
+import PlaceholderImage from "../PlaceholderImage.astro";
+import { getCollection, getEntry, type CollectionEntry } from "astro:content";
+import { ui, type Lang } from "../../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = ui[lang].discography;
+
+// Ocultos hasta tener portadas — reactivar cuando el dúo las entregue.
+const MOSTRAR_PROXIMOS = false;
+
+async function resolveTrack(track: string) {
+  const entry = await getEntry("repertorio", track);
+  if (!entry) return track;
+  const titulo = (lang === "en" && entry.data.titulo_en) || entry.data.titulo;
+  return `${titulo} — ${entry.data.compositor}`;
+}
+
+const todos = await getCollection("discografia");
+
+const disponibles = todos.filter((a: CollectionEntry<"discografia">) => a.data.estado === "lanzado");
+
+function spotifyEmbedSrc(album: CollectionEntry<"discografia">) {
+  const spotify = album.data.plataformas.find((p: { nombre: string; url: string }) => p.nombre === "Spotify");
+  return spotify?.url.replace("open.spotify.com/album/", "open.spotify.com/embed/album/");
+}
+
+const proximos = MOSTRAR_PROXIMOS
+  ? await Promise.all(
+      todos
+        .filter((a: CollectionEntry<"discografia">) => a.data.estado === "proximamente")
+        .map(async (album) => ({
+          album,
+          tracks: await Promise.all(album.data.tracklist.map(resolveTrack)),
+        })),
+    )
+  : [];
+---
+
+<section class="bg-earth-green px-6 py-20 text-old-lace md:py-28">
+  <div class="mx-auto max-w-6xl">
+    <SectionTitle as="h1" tone="dark">{t.metaTitle}</SectionTitle>
+    <p class="max-w-2xl text-lg text-old-lace/80">{t.heroDescription}</p>
+  </div>
+</section>
+
+<section class="px-6 py-20 md:py-28">
+  <div class="mx-auto max-w-4xl">
+    <h2 class="font-display text-2xl">{t.availableNow}</h2>
+    <div class="mt-10 grid gap-x-10 gap-y-14 md:grid-cols-2">
+      {
+        disponibles.map((album) => {
+          const src = spotifyEmbedSrc(album);
+          return (
+            <div>
+              <p class="font-display text-xl">{album.data.titulo}</p>
+              {src && (
+                <iframe
+                  class="mt-4 w-full"
+                  style="border-radius:12px; border:0"
+                  src={src}
+                  title={`Spotify — ${album.data.titulo}`}
+                  height="352"
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="lazy"
+                />
+              )}
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
+
+{
+  proximos.length > 0 && (
+    <section class="bg-bone px-6 py-20 md:py-28">
+      <div class="mx-auto max-w-5xl">
+        <h2 class="font-display text-2xl">{t.comingSoon}</h2>
+        <div class="mt-10 grid gap-16 md:grid-cols-2">
+          {proximos.map(({ album, tracks }) => (
+            <article>
+              <PlaceholderImage label={t.coverPending} class="aspect-square w-full" />
+              <p class="mt-6 text-xs uppercase tracking-[0.08em] text-coyote">
+                {t.comingSoon} · {album.data.anio_lanzamiento}
+              </p>
+              <h3 class="mt-2 font-display text-2xl">{album.data.titulo}</h3>
+
+              {tracks.length > 0 && (
+                <ul class="mt-4 space-y-1 text-sm text-earth-green/80">
+                  {tracks.map((track: string) => (
+                    <li>{track}</li>
+                  ))}
+                </ul>
+              )}
+
+              <p class="mt-4 text-sm text-coyote">{t.comingSoonDigital}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}

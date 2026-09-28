@@ -1,0 +1,53 @@
+---
+import SectionTitle from "../SectionTitle.astro";
+import ConcertRow from "../ConcertRow.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import { ui, type Lang } from "../../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = ui[lang].concerts;
+
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+const todos = (await getCollection("conciertos")).sort(
+  (a: CollectionEntry<"conciertos">, b: CollectionEntry<"conciertos">) =>
+    a.data.fecha.valueOf() - b.data.fecha.valueOf(),
+);
+
+const proximos = todos.filter((c: CollectionEntry<"conciertos">) => c.data.fecha.valueOf() >= today.valueOf());
+const pasados = todos
+  .filter((c: CollectionEntry<"conciertos">) => c.data.fecha.valueOf() < today.valueOf())
+  .reverse();
+---
+
+<section class="bg-earth-green px-6 py-20 text-old-lace md:py-28">
+  <div class="mx-auto max-w-6xl">
+    <SectionTitle as="h1" tone="dark">{t.metaTitle}</SectionTitle>
+    <p class="max-w-2xl text-lg text-old-lace/80">{t.heroDescription}</p>
+  </div>
+</section>
+
+<section class="px-6 py-20 md:py-28">
+  <div class="mx-auto max-w-4xl">
+    <h2 class="font-display text-2xl">{t.upcoming}</h2>
+    <div class="border-b border-coyote/20">
+      {proximos.map((c) => <ConcertRow concierto={c} lang={lang} />)}
+      {proximos.length === 0 && <p class="border-t border-coyote/20 py-8 text-coyote">{t.noConcerts}</p>}
+    </div>
+
+    {
+      pasados.length > 0 && (
+        <>
+          <h2 class="mt-20 font-display text-2xl">{t.past}</h2>
+          <div class="border-b border-coyote/20 opacity-60 grayscale">
+            {pasados.map((c) => <ConcertRow concierto={c} lang={lang} />)}
+          </div>
+        </>
+      )
+    }
+  </div>
+</section>

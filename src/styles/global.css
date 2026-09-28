@@ -1,0 +1,43 @@
+@import "tailwindcss";
+@import "@fontsource-variable/fraunces/standard.css";
+@import "@fontsource-variable/work-sans/wght.css";
+
+@theme {
+  --color-old-lace: #f7f1e1;
+  --color-bone: #e3d8c1;
+  --color-earth-green: #3f3f2c;
+  --color-kobicha: #66371b;
+  --color-goldenrod: #b4833d;
+  --color-coyote: #81754b;
+
+  --font-display: "Fraunces Variable", ui-serif, Georgia, serif;
+  --font-sans: "Work Sans Variable", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-old-lace);
+  color: var(--color-earth-green);
+  font-family: var(--font-sans);
+}
+
+@keyframes page-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

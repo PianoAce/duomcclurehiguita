@@ -1,0 +1,59 @@
+---
+import "../styles/global.css";
+import ClientRouter from "astro/components/ClientRouter.astro";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import type { Lang } from "../i18n/ui";
+
+interface Props {
+  title: string;
+  description?: string;
+  noindex?: boolean;
+  lang?: Lang;
+}
+
+const descriptions: Record<Lang, string> = {
+  es: "McClure & Higuita — dúo de música de cámara. Piano y violín, 15 años de trayectoria, presentaciones en teatros de varios países.",
+  en: "McClure & Higuita — chamber music duo. Piano and violin, 15 years of experience, performances in theaters across several countries.",
+};
+
+const { title, description, noindex = false, lang = "es" } = Astro.props;
+
+const pathWithoutLocale =
+  lang === "en" ? Astro.url.pathname.replace(/^\/en\/?/, "") : Astro.url.pathname.replace(/^\//, "");
+
+function localeUrl(locale: Lang, path: string) {
+  return path ? getRelativeLocaleUrl(locale, path) : getRelativeLocaleUrl(locale);
+}
+
+// Astro's built-in "fade" preset is only 180ms — too snappy. A slower, gentler
+// crossfade with an ease-out curve reads as "smooth" instead of abrupt.
+const pageFade = {
+  old: { name: "page-fade-out", duration: "420ms", easing: "cubic-bezier(0.4, 0, 0.2, 1)", fillMode: "both" },
+  new: { name: "page-fade-in", duration: "420ms", easing: "cubic-bezier(0.4, 0, 0.2, 1)", fillMode: "both" },
+};
+const pageTransition = { forwards: pageFade, backwards: pageFade };
+---
+
+<html lang={lang} transition:animate={pageTransition}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title} · McClure &amp; Higuita</title>
+    <meta name="description" content={description ?? descriptions[lang]} />
+    <link rel="alternate" hreflang="es" href={localeUrl("es", pathWithoutLocale)} />
+    <link rel="alternate" hreflang="en" href={localeUrl("en", pathWithoutLocale)} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <ClientRouter />
+  </head>
+  <body class="bg-old-lace font-sans text-earth-green antialiased">
+    <Header lang={lang} />
+    <main>
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>

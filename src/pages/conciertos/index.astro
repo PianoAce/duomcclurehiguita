@@ -1,0 +1,11 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ConciertosView from "../../components/views/ConciertosView.astro";
+import { useTranslations } from "../../i18n/ui";
+
+const t = useTranslations("es");
+---
+
+<Layout title={t.concerts.metaTitle} lang="es">
+  <ConciertosView lang="es" />
+</Layout>

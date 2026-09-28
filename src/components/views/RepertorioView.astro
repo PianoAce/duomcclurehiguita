@@ -1,0 +1,49 @@
+---
+import SectionTitle from "../SectionTitle.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import { ui, type Lang } from "../../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = ui[lang].repertoire;
+
+const obras = (await getCollection("repertorio")).sort(
+  (a: CollectionEntry<"repertorio">, b: CollectionEntry<"repertorio">) =>
+    a.data.compositor.localeCompare(b.data.compositor),
+);
+---
+
+<section class="bg-earth-green px-6 py-20 text-old-lace md:py-28">
+  <div class="mx-auto max-w-6xl">
+    <SectionTitle as="h1" tone="dark">{t.metaTitle}</SectionTitle>
+    <p class="max-w-2xl text-lg text-old-lace/80">
+      {t.heroDescription}
+    </p>
+  </div>
+</section>
+
+<section class="px-6 py-20 md:py-28">
+  <ul class="mx-auto flex max-w-4xl flex-col divide-y divide-coyote/20 border-t border-coyote/20">
+    {
+      obras.map((obra) => {
+        const titulo = (lang === "en" && obra.data.titulo_en) || obra.data.titulo;
+        const anio = (lang === "en" && obra.data.anio_composicion_en) || obra.data.anio_composicion;
+        const duracion = (lang === "en" && obra.data.duracion_aprox_en) || obra.data.duracion_aprox;
+        return (
+          <li class="flex flex-col gap-2 py-6 md:flex-row md:items-baseline md:justify-between md:gap-8">
+            <div>
+              <p class="font-display text-2xl">{titulo}</p>
+              <p class="mt-1 text-sm text-coyote">{obra.data.compositor}</p>
+            </div>
+            <div class="text-sm text-coyote md:text-right">
+              <p>{anio}</p>
+              {duracion && <p>{duracion}</p>}
+            </div>
+          </li>
+        );
+      })
+    }
+  </ul>
+</section>

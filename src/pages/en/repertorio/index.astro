@@ -1,0 +1,11 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import RepertorioView from "../../../components/views/RepertorioView.astro";
+import { useTranslations } from "../../../i18n/ui";
+
+const t = useTranslations("en");
+---
+
+<Layout title={t.repertoire.metaTitle} lang="en" noindex>
+  <RepertorioView lang="en" />
+</Layout>

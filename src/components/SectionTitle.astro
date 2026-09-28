@@ -1,0 +1,21 @@
+---
+interface Props {
+  as?: "h1" | "h2";
+  tone?: "light" | "dark";
+  align?: "left" | "center";
+}
+const { as: Tag = "h2", tone = "light", align = "left" } = Astro.props;
+---
+
+<div class:list={["mb-10", align === "center" && "text-center"]}>
+  <Tag class="font-display text-4xl md:text-5xl">
+    <slot />
+  </Tag>
+  <span
+    class:list={[
+      "mt-4 block h-px w-10",
+      align === "center" && "mx-auto",
+      tone === "dark" ? "bg-old-lace/40" : "bg-coyote/40",
+    ]}
+  ></span>
+</div>

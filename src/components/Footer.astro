@@ -1,0 +1,30 @@
+---
+import SocialLinks from "./SocialLinks.astro";
+import { ui, type Lang } from "../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = ui[lang].footer;
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-coyote/20 bg-bone">
+  <div class="mx-auto max-w-6xl px-6 py-14">
+    <div class="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
+      <div>
+        <p class="font-display text-xl">McClure &amp; Higuita</p>
+        <p class="mt-2 max-w-xs text-sm text-coyote">{t.tagline}</p>
+      </div>
+      <div class="text-sm">
+        <p class="text-xs uppercase tracking-[0.08em] text-coyote">{t.contact}</p>
+        <a href="mailto:duomyjc@gmail.com" class="mt-2 inline-block hover:text-kobicha">
+          duomyjc@gmail.com
+        </a>
+        <SocialLinks class="mt-4" />
+      </div>
+    </div>
+    <p class="mt-14 text-xs text-coyote">© {year} McClure &amp; Higuita. {t.rights}</p>
+  </div>
+</footer>

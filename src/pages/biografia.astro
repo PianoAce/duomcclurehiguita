@@ -1,0 +1,11 @@
+---
+import Layout from "../layouts/Layout.astro";
+import BiografiaView from "../components/views/BiografiaView.astro";
+import { useTranslations } from "../i18n/ui";
+
+const t = useTranslations("es");
+---
+
+<Layout title={t.biography.metaTitle} lang="es">
+  <BiografiaView lang="es" />
+</Layout>

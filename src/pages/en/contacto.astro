@@ -1,0 +1,11 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ContactoView from "../../components/views/ContactoView.astro";
+import { useTranslations } from "../../i18n/ui";
+
+const t = useTranslations("en");
+---
+
+<Layout title={t.contact.metaTitle} lang="en">
+  <ContactoView lang="en" />
+</Layout>

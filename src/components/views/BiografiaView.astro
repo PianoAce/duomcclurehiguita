@@ -1,0 +1,50 @@
+---
+import SectionTitle from "../SectionTitle.astro";
+import { ui, type Lang } from "../../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = ui[lang].biography;
+---
+
+<section class="bg-earth-green px-6 py-20 text-old-lace md:py-28">
+  <div class="mx-auto max-w-6xl">
+    <SectionTitle as="h1" tone="dark">{t.metaTitle}</SectionTitle>
+    <p class="max-w-2xl text-lg text-old-lace/80">
+      {t.heroDescription}
+    </p>
+  </div>
+</section>
+
+<section class="px-6 py-20 md:py-28">
+  <div class="mx-auto grid max-w-6xl gap-16 md:grid-cols-2 md:divide-x md:divide-coyote/20">
+    <div class="md:pr-16">
+      <img src="/images/mac.jpg" alt="Mac McClure" class="mt-4 aspect-4/5 w-full object-cover" />
+      <h2 class="mt-8 font-display text-3xl">Mac McClure</h2>
+      <p class="mt-1 text-sm uppercase tracking-[0.08em] text-coyote">{t.piano}</p>
+      <p class="mt-4 text-earth-green/80" set:html={t.macBio} />
+    </div>
+    <div class="md:pl-16">
+      <img src="/images/juan.jpg" alt="Juan Carlos Higuita" class="mt-4 aspect-4/5 w-full object-cover" />
+      <h2 class="mt-8 font-display text-3xl">Juan Carlos Higuita</h2>
+      <p class="mt-1 text-sm uppercase tracking-[0.08em] text-coyote">{t.violin}</p>
+      <p class="mt-4 text-earth-green/80" set:html={t.juanBio} />
+    </div>
+  </div>
+</section>
+
+<section class="bg-bone px-6 py-20 md:py-28">
+  <div class="mx-auto max-w-6xl">
+    <img src="/images/foto-bio.jpg" alt="Mac McClure y Juan Carlos Higuita" class="h-auto w-full" />
+    <div class="mt-12">
+      <SectionTitle>{t.asADuo}</SectionTitle>
+      <p
+        class="text-earth-green/80 md:columns-2 md:gap-x-12"
+        style="column-rule: 1px solid color-mix(in srgb, var(--color-coyote) 20%, transparent)"
+        set:html={t.duoBio}
+      />
+    </div>
+  </div>
+</section>

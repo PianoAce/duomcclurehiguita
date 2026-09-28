@@ -1,0 +1,86 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { resolveProgramaItem } from "../lib/repertorio";
+import { ui, type Lang } from "../i18n/ui";
+
+interface Props {
+  concierto: CollectionEntry<"conciertos">;
+  size?: "md" | "lg";
+  lang?: Lang;
+}
+const { concierto, size = "md", lang = "es" } = Astro.props;
+const { data } = concierto;
+const t = ui[lang].concertRow;
+const intlLocale = lang === "en" ? "en-US" : "es";
+
+const fmtDay = new Intl.DateTimeFormat(intlLocale, { day: "2-digit", timeZone: "UTC" });
+const fmtMonthShort = new Intl.DateTimeFormat(intlLocale, { month: "short", timeZone: "UTC" });
+const fmtMonthLong = new Intl.DateTimeFormat(intlLocale, { month: "long", timeZone: "UTC" });
+const fmtYear = new Intl.DateTimeFormat(intlLocale, { year: "numeric", timeZone: "UTC" });
+
+let primary: string;
+let secondary: string;
+const isRange = Boolean(data.fecha_fin);
+
+if (data.fecha_fin) {
+  primary = `${fmtDay.format(data.fecha)} ${fmtMonthShort.format(data.fecha)} – ${fmtDay.format(data.fecha_fin)} ${fmtMonthShort.format(data.fecha_fin)}`;
+  secondary = fmtYear.format(data.fecha_fin);
+} else if (data.fecha_aproximada) {
+  primary = fmtMonthLong.format(data.fecha);
+  secondary = fmtYear.format(data.fecha);
+} else {
+  primary = fmtDay.format(data.fecha);
+  secondary = `${fmtMonthShort.format(data.fecha)} ${fmtYear.format(data.fecha)}`;
+}
+
+const pais = (lang === "en" && data.pais_en) || data.pais;
+const titulo = (lang === "en" && data.titulo_en) || data.titulo || `${data.ciudad}, ${pais}`;
+const lugarLinea = [data.lugar, data.direccion ?? `${data.ciudad}, ${pais}`].filter(Boolean).join(" — ");
+
+const programa = await Promise.all(data.programa.map(resolveProgramaItem));
+const programaLinea = programa.map((p) => `${p.label}${p.estreno ? ` (${t.premiere})` : ""}`).join(" · ");
+---
+
+<div
+  class:list={[
+    "flex flex-col gap-4 border-t border-coyote/20 py-8 md:flex-row md:gap-10",
+    size === "lg" ? "md:items-center" : "md:items-start",
+  ]}
+>
+  <div
+    class:list={[
+      "flex shrink-0 items-baseline gap-3 md:flex-col md:items-start md:gap-1",
+      isRange ? "md:w-56" : "md:w-44",
+    ]}
+  >
+    <span
+      class:list={[
+        "font-display leading-none whitespace-nowrap text-kobicha",
+        isRange ? "text-xl md:text-2xl" : size === "lg" ? "text-4xl md:text-5xl" : "text-3xl",
+      ]}
+    >
+      {primary}
+    </span>
+    <span class="text-xs uppercase tracking-widest text-coyote">{secondary}</span>
+  </div>
+
+  <div class="flex-1">
+    <p class:list={["font-display", size === "lg" ? "text-2xl md:text-3xl" : "text-xl"]}>{titulo}</p>
+    <p class="mt-1 text-sm text-coyote">
+      {lugarLinea}
+      {data.hora && ` · ${data.hora}`}
+    </p>
+    {programaLinea && <p class="mt-2 text-sm text-earth-green/70">{programaLinea}</p>}
+    {data.estado === "por_confirmar" && <p class="mt-2 text-xs uppercase tracking-widest text-coyote">{t.dateTBD}</p>}
+  </div>
+
+  {
+    data.boleteria_url && (
+      <div class="shrink-0">
+        <a href={data.boleteria_url} class="border-b border-kobicha pb-0.5 text-sm hover:text-kobicha">
+          {t.tickets}
+        </a>
+      </div>
+    )
+  }
+</div>

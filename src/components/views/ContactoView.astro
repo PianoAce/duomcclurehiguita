@@ -1,0 +1,27 @@
+---
+import SectionTitle from "../SectionTitle.astro";
+import SocialLinks from "../SocialLinks.astro";
+import { ui, type Lang } from "../../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = ui[lang].contact;
+---
+
+<section class="bg-earth-green px-6 py-24 text-old-lace md:py-32">
+  <div class="mx-auto max-w-3xl text-center">
+    <SectionTitle as="h1" tone="dark" align="center">{t.metaTitle}</SectionTitle>
+    <p class="mx-auto max-w-xl text-lg text-old-lace/80">
+      {t.heroDescription}
+    </p>
+    <a
+      href="mailto:duomyjc@gmail.com"
+      class="mt-10 inline-block border-b border-goldenrod pb-1 font-display text-2xl text-goldenrod hover:text-old-lace hover:border-old-lace"
+    >
+      duomyjc@gmail.com
+    </a>
+    <SocialLinks tone="dark" class="mt-10 justify-center" />
+  </div>
+</section>
