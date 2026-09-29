@@ -23,10 +23,7 @@ const proximos = conciertos
   .slice(0, 3);
 ---
 
-<section
-  class="relative flex h-screen flex-col justify-end bg-earth-green bg-cover bg-center"
-  style="background-image: url('/images/hero-duo.jpg')"
->
+<section class="hero-photo relative flex h-screen flex-col justify-end bg-earth-green bg-cover">
   <div class="absolute inset-0 bg-linear-to-b from-earth-green/00 via-transparent to-earth-green/55"></div>
   <div class="relative flex w-full justify-end px-6 py-16 text-old-lace md:px-10 md:py-20">
     <div class="max-w-md">
@@ -59,3 +56,17 @@ const proximos = conciertos
     }
   </div>
 </section>
+
+<style>
+  .hero-photo {
+    background-image: url("/images/hero-duo.jpg");
+    background-position: center;
+  }
+
+  @media (max-width: 767px) {
+    .hero-photo {
+      background-image: url("/images/hero-mobile.jpg");
+      background-position: left center;
+    }
+  }
+</style>
