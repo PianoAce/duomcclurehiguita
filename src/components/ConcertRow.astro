@@ -82,7 +82,12 @@ const ctaLabel = isPhoneLink ? t.reservations : t.tickets;
   {
     data.boleteria_url && (
       <div class="shrink-0">
-        <a href={data.boleteria_url} class="border-b border-kobicha pb-0.5 text-sm hover:text-kobicha">
+        <a
+          href={data.boleteria_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="border-b border-kobicha pb-0.5 text-sm hover:text-kobicha"
+        >
           {ctaLabel}
         </a>
       </div>

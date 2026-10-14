@@ -162,21 +162,31 @@ const enHref = localeUrl("en", pathWithoutLocale);
     transition: background-color 200ms ease;
   }
 
+  /*
+   * Entering the scrolled state snaps instantly (transition: none) instead of
+   * fading over 200ms. On a real phone, fast momentum-scroll can outrun the
+   * fade, leaving a visible gap where the header still looks transparent
+   * over the page content behind it. Leaving the scrolled state (back to the
+   * top) still fades smoothly via the base #site-header rule above.
+   */
   #site-header[data-scrolled="true"] {
     background-color: var(--color-old-lace);
     border-bottom-color: color-mix(in srgb, var(--color-coyote) 20%, transparent);
+    transition: none;
   }
   #site-header[data-scrolled="true"] .site-logo,
   #site-header[data-scrolled="true"] .site-link {
     color: var(--color-earth-green);
+    transition: none;
+  }
+  #site-header[data-scrolled="true"] .site-burger span {
+    background-color: var(--color-earth-green);
+    transition: none;
   }
   #site-header[data-scrolled="true"] .site-link.is-active {
     color: var(--color-kobicha);
   }
   #site-header[data-scrolled="true"] a.site-link:hover {
     color: var(--color-kobicha);
-  }
-  #site-header[data-scrolled="true"] .site-burger span {
-    background-color: var(--color-earth-green);
   }
 </style>
