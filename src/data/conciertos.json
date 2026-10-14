@@ -48,6 +48,34 @@
     ]
   },
   {
+    "id": "2026-11-05-rionegro-odeon",
+    "titulo": "De Mozart a Matarrita, de Viena a Rionegro: conversación entre el violín y el piano",
+    "titulo_en": "From Mozart to Matarrita, from Vienna to Rionegro: a conversation between violin and piano",
+    "fecha": "2026-11-05",
+    "hora": "3:00 PM",
+    "ciudad": "Rionegro",
+    "lugar": "El Odeón Escondido",
+    "direccion": "Llanogrande, vereda Chipre",
+    "pais": "Colombia",
+    "estado": "por_confirmar",
+    "boleteria_url": "tel:+573102137880",
+    "programa": []
+  },
+  {
+    "id": "2026-11-06-medellin-bellas-artes",
+    "titulo": "Concierto de Gala — 100 años del Palacio de Bellas Artes",
+    "titulo_en": "Gala Concert — 100 Years of the Palacio de Bellas Artes",
+    "fecha": "2026-11-06",
+    "hora": "7:00 PM",
+    "ciudad": "Medellín",
+    "lugar": "Sala Beethoven, Palacio de Bellas Artes",
+    "pais": "Colombia",
+    "estado": "confirmado",
+    "descripcion": "Quince años tocando juntos. Un recital de violín y piano donde la maestría se parece mucho a la amistad.",
+    "descripcion_en": "Fifteen years playing together. A violin and piano recital where mastery looks a lot like friendship.",
+    "programa": []
+  },
+  {
     "id": "2026-11-08-bogota-teatro-mayor",
     "titulo": "McClure & Higuita en el Teatro Mayor",
     "titulo_en": "McClure & Higuita at Teatro Mayor",
@@ -56,6 +84,7 @@
     "lugar": "Teatro Mayor Julio Mario Santo Domingo",
     "pais": "Colombia",
     "estado": "confirmado",
+    "boleteria_url": "https://tuboleta.com/es/eventos/juan-carlos-higuita-violin-y-mac-mcclure-piano-0",
     "programa": [
       "mozart-sonata-k380",
       "toldra-soneti-de-la-rosada",

@@ -85,7 +85,8 @@ export const ui = {
     },
     concertRow: {
       dateTBD: "Fecha por confirmar",
-      tickets: "Boletería",
+      tickets: "Comprar entradas",
+      reservations: "Reservas",
       premiere: "estreno",
     },
     discography: {
@@ -183,7 +184,8 @@ export const ui = {
     },
     concertRow: {
       dateTBD: "Date to be confirmed",
-      tickets: "Tickets",
+      tickets: "Buy tickets",
+      reservations: "Reservations",
       premiere: "premiere",
     },
     discography: {

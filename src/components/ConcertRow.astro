@@ -36,9 +36,13 @@ if (data.fecha_fin) {
 const pais = (lang === "en" && data.pais_en) || data.pais;
 const titulo = (lang === "en" && data.titulo_en) || data.titulo || `${data.ciudad}, ${pais}`;
 const lugarLinea = [data.lugar, data.direccion ?? `${data.ciudad}, ${pais}`].filter(Boolean).join(" — ");
+const descripcion = (lang === "en" && data.descripcion_en) || data.descripcion;
 
 const programa = await Promise.all(data.programa.map(resolveProgramaItem));
 const programaLinea = programa.map((p) => `${p.label}${p.estreno ? ` (${t.premiere})` : ""}`).join(" · ");
+
+const isPhoneLink = data.boleteria_url?.startsWith("tel:");
+const ctaLabel = isPhoneLink ? t.reservations : t.tickets;
 ---
 
 <div
@@ -71,6 +75,7 @@ const programaLinea = programa.map((p) => `${p.label}${p.estreno ? ` (${t.premie
       {data.hora && ` · ${data.hora}`}
     </p>
     {programaLinea && <p class="mt-2 text-sm text-earth-green/70">{programaLinea}</p>}
+    {descripcion && <p class="mt-2 text-sm text-earth-green/70 italic">{descripcion}</p>}
     {data.estado === "por_confirmar" && <p class="mt-2 text-xs uppercase tracking-widest text-coyote">{t.dateTBD}</p>}
   </div>
 
@@ -78,7 +83,7 @@ const programaLinea = programa.map((p) => `${p.label}${p.estreno ? ` (${t.premie
     data.boleteria_url && (
       <div class="shrink-0">
         <a href={data.boleteria_url} class="border-b border-kobicha pb-0.5 text-sm hover:text-kobicha">
-          {t.tickets}
+          {ctaLabel}
         </a>
       </div>
     )

@@ -15,6 +15,8 @@ const conciertos = defineCollection({
     direccion: z.string().optional(),
     pais: z.string(),
     pais_en: z.string().optional(),
+    descripcion: z.string().optional(),
+    descripcion_en: z.string().optional(),
     // Cada valor es un id de una entrada de `repertorio`, o texto libre si la obra
     // aún no está en esa colección. Se resuelve a mano en la plantilla con getEntry,
     // porque reference() envuelve cualquier string sin validar que exista.
