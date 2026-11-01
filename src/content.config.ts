@@ -23,6 +23,10 @@ const conciertos = defineCollection({
     programa: z.array(z.string()).default([]),
     estado: z.enum(["confirmado", "por_confirmar"]),
     boleteria_url: z.string().url().optional(),
+    video_url: z.string().url().optional(),
+    // Marca el concierto para la tarjeta destacada aparte en /conciertos,
+    // fuera del listado cronológico normal.
+    destacado: z.boolean().default(false),
   }),
 });
 

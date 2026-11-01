@@ -82,12 +82,14 @@ export const ui = {
       upcoming: "Próximos",
       past: "Pasados",
       noConcerts: "Agenda en definición — vuelve pronto.",
+      featured: "Concierto destacado",
     },
     concertRow: {
       dateTBD: "Fecha por confirmar",
       tickets: "Comprar entradas",
       reservations: "Reservas",
       premiere: "estreno",
+      watchVideo: "Ver video",
     },
     discography: {
       metaTitle: "Discografía",
@@ -181,12 +183,14 @@ export const ui = {
       upcoming: "Upcoming",
       past: "Past",
       noConcerts: "Schedule in the works — check back soon.",
+      featured: "Featured concert",
     },
     concertRow: {
       dateTBD: "Date to be confirmed",
       tickets: "Buy tickets",
       reservations: "Reservations",
       premiere: "premiere",
+      watchVideo: "Watch video",
     },
     discography: {
       metaTitle: "Discography",

@@ -80,16 +80,28 @@ const ctaLabel = isPhoneLink ? t.reservations : t.tickets;
   </div>
 
   {
-    data.boleteria_url && (
-      <div class="shrink-0">
-        <a
-          href={data.boleteria_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="border-b border-kobicha pb-0.5 text-sm hover:text-kobicha"
-        >
-          {ctaLabel}
-        </a>
+    (data.boleteria_url || data.video_url) && (
+      <div class="flex shrink-0 flex-col items-start gap-2">
+        {data.boleteria_url && (
+          <a
+            href={data.boleteria_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="border-b border-kobicha pb-0.5 text-sm hover:text-kobicha"
+          >
+            {ctaLabel}
+          </a>
+        )}
+        {data.video_url && (
+          <a
+            href={data.video_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="border-b border-coyote pb-0.5 text-sm text-coyote hover:border-kobicha hover:text-kobicha"
+          >
+            {t.watchVideo}
+          </a>
+        )}
       </div>
     )
   }

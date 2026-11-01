@@ -1,6 +1,7 @@
 ---
 import SectionTitle from "../SectionTitle.astro";
 import ConcertRow from "../ConcertRow.astro";
+import FeaturedConcert from "../FeaturedConcert.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 import { ui, type Lang } from "../../i18n/ui";
 
@@ -18,7 +19,9 @@ const todos = (await getCollection("conciertos")).sort(
     a.data.fecha.valueOf() - b.data.fecha.valueOf(),
 );
 
-const proximos = todos.filter((c: CollectionEntry<"conciertos">) => c.data.fecha.valueOf() >= today.valueOf());
+const proximosTodos = todos.filter((c: CollectionEntry<"conciertos">) => c.data.fecha.valueOf() >= today.valueOf());
+const destacado = proximosTodos.find((c: CollectionEntry<"conciertos">) => c.data.destacado);
+const proximos = proximosTodos.filter((c: CollectionEntry<"conciertos">) => c !== destacado);
 const pasados = todos
   .filter((c: CollectionEntry<"conciertos">) => c.data.fecha.valueOf() < today.valueOf())
   .reverse();
@@ -33,10 +36,18 @@ const pasados = todos
 
 <section class="px-6 py-20 md:py-28">
   <div class="mx-auto max-w-4xl">
+    {destacado && (
+      <div class="mb-16">
+        <FeaturedConcert concierto={destacado} lang={lang} />
+      </div>
+    )}
+
     <h2 class="font-display text-2xl">{t.upcoming}</h2>
     <div class="border-b border-coyote/20">
       {proximos.map((c) => <ConcertRow concierto={c} lang={lang} />)}
-      {proximos.length === 0 && <p class="border-t border-coyote/20 py-8 text-coyote">{t.noConcerts}</p>}
+      {proximos.length === 0 && destacado == null && (
+        <p class="border-t border-coyote/20 py-8 text-coyote">{t.noConcerts}</p>
+      )}
     </div>
 
     {

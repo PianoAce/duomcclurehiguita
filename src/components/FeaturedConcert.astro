@@ -1,0 +1,17 @@
+---
+import type { CollectionEntry } from "astro:content";
+import ConcertRow from "./ConcertRow.astro";
+import { ui, type Lang } from "../i18n/ui";
+
+interface Props {
+  concierto: CollectionEntry<"conciertos">;
+  lang?: Lang;
+}
+const { concierto, lang = "es" } = Astro.props;
+const t = ui[lang].concerts;
+---
+
+<div class="border border-coyote/30 bg-bone px-6 py-2 md:px-10">
+  <p class="pt-6 text-xs uppercase tracking-widest text-kobicha">{t.featured}</p>
+  <ConcertRow concierto={concierto} lang={lang} size="lg" />
+</div>
